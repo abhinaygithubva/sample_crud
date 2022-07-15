@@ -16,11 +16,24 @@ namespace sample_crud
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return new HostBuilder()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseKestrel();
+                }).ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(LogLevel.Trace);
+                }).ConfigureAppConfiguration((context, config) =>
+                {
+                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
+                    config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: false);
+                    config.AddJsonFile("appsettings.k8s.json", optional: true, reloadOnChange: false);
+                    config.AddJsonFile("secrets/appsettings.secrets.json", optional: true, reloadOnChange: false);
                 });
+        }
     }
 }
