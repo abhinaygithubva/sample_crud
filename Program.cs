@@ -26,9 +26,9 @@ namespace sample_crud
         }).ConfigureAppConfiguration((context, config) =>
         {
             config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
-            config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: false);
+           // config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: false);
             config.AddJsonFile("appsettings.k8s.json", optional: true, reloadOnChange: false);
-            config.AddJsonFile("appsettings.secrets.json", optional: true, reloadOnChange: false);
+            config.AddJsonFile("secrets/appsettings.secrets.json", optional: true, reloadOnChange: false);
         });
 }
     }
